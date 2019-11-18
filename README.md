@@ -7,3 +7,5 @@
 
 ### UNDER CONSTRUCTION
 ### TO DO
+
+[] GitHub integration
