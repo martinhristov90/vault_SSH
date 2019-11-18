@@ -1,0 +1,15 @@
+vault write \
+    -field=signed_key \
+    ssh-client/sign/regular \
+    valid_principals="ubuntu" \
+    public_key=@$HOME/.ssh/id_rsa.pub \
+    > $HOME/.ssh/cert-signed.pub
+
+    vault login \
+    -path=ssh_userpass \
+    -method=userpass \
+    username=withoutroot \
+    password=withoutroot
+
+HTTP API:
+http://127.0.0.1:8200/v1/ssh-client/sign/regular
