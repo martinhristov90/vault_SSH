@@ -53,28 +53,8 @@ vault write \
   -field=public_key \
   ssh-client/config/ca \
   generate_signing_key=true \
-  | sudo tee /etc/ssh/trusted-user-ca-keys.pem > /dev/null 2>&1
-
-# Entering the Vault CA generated cert as trusted by SSH daemon, every public key signed by it should be able to log on.
-echo "Entering the Vault CA generated cert as trusted by SSH daemon, every public key signed by it should be able to log on"
-echo "TrustedUserCAKeys /etc/ssh/trusted-user-ca-keys.pem" | sudo tee -a /etc/ssh/sshd_config
-
-# Checking if sshd_config looks ok
-
-sudo sudo sshd -t 
-
-if [ $? -eq 0 ] 
-then 
-    echo "The /etc/sshd_config file looks good...move on"
-else
-    echo "Something went terrably wrong...exiting"
-    exit 1
-fi
-
-# Reload SSHD to pick up the changes
-echo "Reload SSHD to pick up the changes"
-sudo systemctl reload sshd
-
+  | sudo tee /vagrant/trusted-user-ca-keys.pem > /dev/null 2>&1
+  
 # Creating regular and root roles in SSH secret backend
 echo "Creating regular and root roles in SSH secret backend"
 vault write ssh-client/roles/regular @/vagrant/configs/roles/regular-user-role.hcl 
