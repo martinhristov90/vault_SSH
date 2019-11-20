@@ -62,4 +62,4 @@ More info about payload [here](https://www.vaultproject.io/api/secret/ssh/index.
 ### UNDER CONSTRUCTION
 ### TO DO
 
-[] GitHub integration
+- [ ] GitHub integration
