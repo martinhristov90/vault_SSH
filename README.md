@@ -49,7 +49,7 @@ How `payload.json` should look like :
 
 Unprivileged :
 ```
-http://1localhost:8200/v1/ssh-client/sign/regular
+http://localhost:8200/v1/ssh-client/sign/regular
 ```
 Privileged :
 ```
