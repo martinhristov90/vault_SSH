@@ -57,10 +57,29 @@ http://localhost:8200/v1/auth/ssh_userpass/login/withroot
 ```
 More info about what payload to provide to those endpoints [here](https://www.vaultproject.io/api/secret/ssh/index.html#sign-ssh-key)
 
+### Setting up GitHub auth :
 
+- Generate personal access token by Github.com :
+    - Click settings (your profile picture)
+    - Select Developer settings
+    - Personal access token
+    - Click generate new token
+    - enter name and assign read:org permissions
+    - KEEP THE GENERATED TOKEN SECRET !
+- Create organization in GitHub, create Team, make yourself a team member.
+- In Vault execute : `vault auth enable github` to enable the GitHub auth engine at path `/github`
+- In vVaultault execute : `vault write auth/github/config organization=NAME_OF_YOUR_ORG` 
+- In Vault execute : `vault write auth/github/map/teams/testing value=ssh-limited-user-policy` (the members of team named `testing` will be assigned `ssh-limited-user-policy` policy upon login)
+- Login to Vault using Curl or Postman, using the following API request :
+
+URL endpoint : `http://localhost:8200/v1/auth/github/login`
+Payload :
+```
+{"token": "YOUR_PERSONAL_ACCESS_TOKEN"}
+```
 
 ### NB : This is test environment, if you intend to use it in production, overwrite the needed parameters in /etc/vault.d/vault.hcl . 
 
 ### TO DO
 
-- [ ] GitHub integration
+- [x] GitHub integration
