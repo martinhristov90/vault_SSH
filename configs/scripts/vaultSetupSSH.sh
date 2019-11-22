@@ -54,18 +54,22 @@ vault write \
   ssh-client/config/ca \
   generate_signing_key=true \
   | sudo tee /vagrant/trusted-user-ca-keys.pem > /dev/null 2>&1
-  
+
 # Creating regular and root roles in SSH secret backend
 echo "Creating regular and root roles in SSH secret backend"
 vault write ssh-client/roles/regular @/vagrant/configs/roles/regular-user-role.hcl 
 
 vault write ssh-client/roles/root @/vagrant/configs/roles/root-user-role.hcl
 
+vault write ssh-client/roles/limited @/vagrant/configs/roles/limited-user-role.hcl
+
 # Creating regular and root Vault polices
 echo "Creating regular and root Vault polices"
 vault policy write ssh-regular-user-policy /vagrant/configs/policies/regular-user-role-policy.hcl
 
 vault policy write ssh-root-user-policy /vagrant/configs/policies/root-user-role-policy.hcl
+
+vault policy write ssh-limited-user-policy /vagrant/configs/policies/limited-user-role-policy.hcl
 
 # Enabling userpass for ssh clients 
 echo "Enabling userpass for ssh clients"
@@ -77,14 +81,15 @@ vault write auth/ssh_userpass/users/withoutroot \
   password="withoutroot" \
   policies="ssh-regular-user-policy" > /dev/null 2>&1
 
-
 vault write auth/ssh_userpass/users/withroot \
   password="withroot" \
   policies="ssh-regular-user-policy,ssh-root-user-policy" > /dev/null 2>&1
 
-# Adding ubuntu user
-sudo useradd ubuntu
+vault write auth/ssh_userpass/users/limited \
+  password="limited" \
+  policies="ssh-limited-user-policy" > /dev/null 2>&1
 
+# Adding ubuntu user
 
 
 

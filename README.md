@@ -49,17 +49,18 @@ How `payload.json` should look like :
 
 Unprivileged :
 ```
-http://127.0.0.1:8200/v1/ssh-client/sign/regular
+http://1localhost:8200/v1/ssh-client/sign/regular
 ```
 Privileged :
 ```
 http://localhost:8200/v1/auth/ssh_userpass/login/withroot
 ```
-More info about payload [here](https://www.vaultproject.io/api/secret/ssh/index.html#sign-ssh-key)
+More info about what payload to provide to those endpoints [here](https://www.vaultproject.io/api/secret/ssh/index.html#sign-ssh-key)
 
 
 
-### UNDER CONSTRUCTION
+### NB : This is test environment, if you intend to use it in production, overwrite the needed parameters in /etc/vault.d/vault.hcl . 
+
 ### TO DO
 
 - [ ] GitHub integration
